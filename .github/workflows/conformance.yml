@@ -1,0 +1,33 @@
+# Reusable: every repo's .github/workflows/tbj.yml calls this.
+# Checks the calling repo against the standard and writes a table to the job summary.
+# With brand.toml `enforce = "warn"` it never fails a build; flip to "error" once rollout is done.
+name: TBJ conformance
+
+on:
+  workflow_call:
+    inputs:
+      brand-ref:
+        description: tbj-brand ref to check against
+        type: string
+        default: v1
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: ${{ github.event.repository.name }}
+      - uses: actions/checkout@v4
+        with:
+          repository: TheBooleanJulian/tbj-brand
+          ref: ${{ inputs.brand-ref }}
+          path: .tbj-brand
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Check standards
+        working-directory: .tbj-brand
+        env:
+          TBJ_DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+        run: python -m tbjsync audit --repo "$GITHUB_WORKSPACE/${{ github.event.repository.name }}"

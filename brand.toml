@@ -1,0 +1,112 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# tbj-brand — the single source of truth for every TheBooleanJulian repo.
+# Change something here, push to main, and the sync workflow opens a PR on
+# every repo that drifts from it. Nothing in individual repos should restate
+# these values by hand.
+# ─────────────────────────────────────────────────────────────────────────────
+
+[standards]
+# Bump on every change that alters what repos must contain (semver).
+# Each synced repo records the version it conforms to in .tbj.toml.
+version = "1.0.0"
+# "warn"  → conformance CI reports problems but never fails a build.
+# "error" → conformance CI fails on any error-level check. Flip once rollout is done.
+enforce = "warn"
+# false → the sync workflow only runs when you start it by hand (Actions → Sync standards).
+# true  → it also runs on every change to the kit and every Monday. Turn on after the canary wave.
+auto_sync = false
+
+[identity]
+name    = "TheBooleanJulian"
+handle  = "@TheBooleanJulian"
+domain  = "thebooleanjulian.dev"
+site    = "https://thebooleanjulian.dev"
+github  = "https://github.com/TheBooleanJulian"
+owner   = "TheBooleanJulian"
+tagline = "Python-first software and automation, built in Singapore."
+
+[palette]
+# Which token set README badges and generated theme files use.
+#   "unified" → Julian Unified UI (dark void, cyan #00E5FF + magenta #FF2BD6, Chakra Petch / IBM Plex Sans / JetBrains Mono)
+#   "legacy"  → the original web palette (void #050508, teal #00D4C8, gold #F5C842, Space Grotesk / JetBrains Mono)
+active = "unified"
+# Badge hex (no #) per palette, used for the license/brand badges in READMEs.
+badge.unified = "00E5FF"
+badge.legacy  = "00D4C8"
+
+[license]
+# Default policy for repos you own outright. Per-repo overrides live in repos.toml.
+#   "dual-agpl" → LICENSE (AGPLv3) + COMMERCIAL-LICENSE.md
+#   "mit"       → LICENSE (MIT)
+#   "keep"      → never touch licence files (forks, third-party code)
+default = "dual-agpl"
+copyright_holder = "Julian Cheung (TheBooleanJulian)"
+
+[branches]
+# PRs from the sync bot target `dev` when it exists, otherwise the default branch,
+# matching the feature → dev → main flow.
+prefer_base = "dev"
+sync_branch = "tbj/sync"
+default_name = "main"
+
+# ── Ventures: decides the footer wording and the brand badge ────────────────
+[ventures.tbj]
+label  = "TheBooleanJulian"
+url    = "https://thebooleanjulian.dev"
+footer = 'Built by <a href="{github}">{handle}</a> · <a href="{site}">{domain}</a>'
+
+[ventures.accurova]
+label  = "Accurova"
+url    = "https://accurova.com"
+footer = 'An <a href="https://accurova.com">Accurova</a> tool · Built by <a href="{github}">{handle}</a> · <a href="{site}">{domain}</a>'
+
+[ventures.upteach]
+label  = "Upteach"
+url    = "https://thebooleanjulian.dev"
+footer = 'Part of Upteach · Built by <a href="{github}">{handle}</a> · <a href="{site}">{domain}</a>'
+
+[ventures.fan]
+label  = "Fan project"
+url    = "https://thebooleanjulian.dev"
+footer = 'A fan project · Built by <a href="{github}">{handle}</a> · <a href="{site}">{domain}</a>'
+
+# ── Tiers: decides how much of the standard applies ─────────────────────────
+# Each tier lists the check ids that run. See tbjsync/checks.py for definitions.
+[tiers.product]
+about  = "Maintained, public-facing. Full standard, including UI tokens."
+checks = ["marker", "readme", "badges", "license_section", "footer", "sections", "license_files", "editorconfig", "gitignore", "ci", "branch_main", "branch_dev", "zeabur", "ui_tokens"]
+
+[tiers.tool]
+about  = "Utilities, bots, scripts. Full repo chrome; UI is advisory."
+checks = ["marker", "readme", "badges", "license_section", "footer", "sections", "license_files", "editorconfig", "gitignore", "ci", "branch_main", "zeabur"]
+
+[tiers.themed]
+about  = "Games, fan and creative projects with their own visual identity. Repo chrome only; UI exempt."
+checks = ["marker", "readme", "badges", "license_section", "footer", "license_files", "editorconfig", "gitignore", "ci", "zeabur"]
+
+[tiers.archive]
+about  = "Superseded or historical. Banner + footer only, then archive on GitHub."
+checks = ["marker", "archived_banner", "footer"]
+
+[tiers.external]
+about  = "Forks or third-party code. Never modified by sync; licence flagged for review."
+checks = ["fork_license"]
+
+# Canonical README section order. Only presence is enforced (warn); wording inside is yours.
+[readme]
+sections = [
+  "What it does",
+  "Features",
+  "Tech Stack",
+  "Screenshots",
+  "Quick Start",
+  "Configuration",
+  "Project Structure",
+  "Deployment",
+  "Status & Roadmap",
+  "Changelog",
+  "License",
+]
+# Sections that may be absent without a warning, by tier.
+optional.tool   = ["Screenshots", "Configuration", "Deployment"]
+optional.themed = ["Tech Stack", "Configuration", "Project Structure", "Deployment", "Quick Start"]

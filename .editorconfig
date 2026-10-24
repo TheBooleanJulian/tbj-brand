@@ -1,0 +1,26 @@
+# Managed by tbj-brand — edits are overwritten on the next sync.
+root = true
+
+[*]
+charset = utf-8
+end_of_line = lf
+insert_final_newline = true
+trim_trailing_whitespace = true
+indent_style = space
+indent_size = 2
+
+[*.{py,gd}]
+indent_size = 4
+
+[*.gd]
+indent_style = tab
+
+[*.{ps1,cs,ahk}]
+indent_size = 4
+end_of_line = crlf
+
+[*.md]
+trim_trailing_whitespace = false
+
+[Makefile]
+indent_style = tab

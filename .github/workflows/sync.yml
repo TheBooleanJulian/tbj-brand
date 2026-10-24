@@ -1,0 +1,80 @@
+# The engine that keeps existing repos aligned.
+#
+# Runs when the standard changes (push to main touching the kit), every Monday,
+# or by hand. For each repo in the chosen wave it clones, applies fixes inside
+# managed blocks/files, pushes branch `tbj/sync` and opens — or refreshes — one PR.
+# Nothing merges without you.
+#
+# One-time setup:
+#   1. Create a fine-grained token with access to all your repositories and
+#      permissions: Contents (read/write), Pull requests (read/write), Workflows (read/write).
+#   2. Save it in this repo as the secret TBJ_SYNC_TOKEN.
+#   3. Tag the kit: git tag v1 && git push origin v1  (reusable workflows are pinned @v1;
+#      move the tag forward with `git tag -f v1 && git push -f origin v1` when you release).
+name: Sync standards
+
+on:
+  push:
+    branches: [main]
+    paths: [brand.toml, repos.toml, "templates/**", "tokens/**", "tbjsync/**"]
+  schedule:
+    - cron: "17 1 * * 1"   # Mondays 09:17 SGT
+  workflow_dispatch:
+    inputs:
+      wave:
+        description: "Highest wave to sync (0 canary, 1 products, 2 everything)"
+        default: "0"
+      only:
+        description: "Space-separated repo names (optional)"
+        default: ""
+      dry_run:
+        description: "Report only, push nothing"
+        type: boolean
+        default: true
+
+concurrency:
+  group: tbj-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Gate automatic runs on brand.toml auto_sync
+        id: gate
+        run: |
+          ON=$(python -c "import tomllib;print(str(tomllib.load(open('brand.toml','rb'))['standards'].get('auto_sync', False)).lower())")
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] || [ "$ON" = "true" ]; then echo "go=true" >> "$GITHUB_OUTPUT"; else echo "auto_sync is off — skipping"; fi
+      - name: Sync
+        if: steps.gate.outputs.go == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.TBJ_SYNC_TOKEN }}
+        run: |
+          if [ -z "$GH_TOKEN" ]; then echo "::error::Add the TBJ_SYNC_TOKEN secret first (see top of this file)"; exit 1; fi
+          gh auth setup-git
+          WAVE="${{ github.event.inputs.wave || '2' }}"
+          ARGS="--wave $WAVE --json reports/latest.json"
+          if [ "${{ github.event.inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          if [ -n "${{ github.event.inputs.only }}" ]; then ARGS="$ARGS --only ${{ github.event.inputs.only }}"; fi
+          mkdir -p reports
+          python -m tbjsync sync $ARGS
+      - name: Publish report
+        if: always() && steps.gate.outputs.go == 'true'
+        run: |
+          python -m tbjsync profile
+          git config user.name "tbj-sync[bot]"
+          git config user.email "tbj-sync@users.noreply.github.com"
+          git add reports/latest.json dist/profile-README.md dist/projects.json || true
+          git diff --cached --quiet || git commit -m "chore(report): conformance snapshot [skip ci]"
+          git push || true
+      - uses: actions/upload-artifact@v4
+        if: always() && steps.gate.outputs.go == 'true'
+        with:
+          name: conformance-report
+          path: reports/latest.json

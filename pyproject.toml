@@ -1,0 +1,10 @@
+[project]
+name = "tbj-brand"
+version = "1.0.0"
+description = "Brand standards and sync engine for every TheBooleanJulian repo"
+requires-python = ">=3.11"
+dependencies = []
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

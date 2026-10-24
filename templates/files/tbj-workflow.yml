@@ -1,0 +1,15 @@
+# Managed by tbj-brand — edits are overwritten on the next sync.
+# Runs the TheBooleanJulian standards check (and stack CI where detected)
+# using reusable workflows from ${owner}/tbj-brand, so CI logic lives in one place.
+name: TBJ
+
+on:
+  push:
+    branches: [main, master, dev]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  conformance:
+    uses: ${owner}/tbj-brand/.github/workflows/conformance.yml@v1
+${stack_jobs}

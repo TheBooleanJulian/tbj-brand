@@ -1,0 +1,22 @@
+# CI for the kit itself: tests must pass and generated tokens must be current before merge.
+name: Kit CI
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pytest
+      - run: pytest -q
+      - name: Generated tokens are up to date
+        run: |
+          python -m tbjsync tokens
+          git diff --exit-code dist/ || (echo "Run: python -m tbjsync tokens" && exit 1)

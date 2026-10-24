@@ -1,0 +1,114 @@
+{
+  "name": "Julian Unified UI",
+  "version": 1,
+  "color": {
+    "themes": [
+      { "id": "dark", "name": "Dark" },
+      { "id": "light", "name": "Light" }
+    ],
+    "tokens": [
+      { "name": "bg", "value": { "dark": "#05060d", "light": "#f3f5ff" }, "usage": "App window background, behind everything. Ink and muted ink read on it in both themes." },
+      { "name": "surface", "value": { "dark": "#0b0e1a", "light": "#ffffff" }, "usage": "Default panel, sidebar and input background. Body copy (`ink`, `ink-muted`) reads on it." },
+      { "name": "surface-raised", "value": { "dark": "#121629", "light": "#eaeefc" }, "usage": "Cards inside panels, table row hover, menus. `ink` and `ink-muted` read on it." },
+      { "name": "surface-overlay", "value": { "dark": "#1a2040", "light": "#dde3f9" }, "usage": "Selected rows, active nav item, progress track, popovers. `ink` and `ink-muted` read on it." },
+      { "name": "scrim", "value": { "dark": "rgba(2, 3, 8, 0.72)", "light": "rgba(11, 16, 48, 0.38)" }, "usage": "Dimmed backdrop behind dialogs and command palettes." },
+      { "name": "line", "value": { "dark": "#262d52", "light": "#cdd4f0" }, "usage": "Decorative hairlines: panel borders, dividers, table rules. Never the only cue that a control exists." },
+      { "name": "line-strong", "value": { "dark": "#6370b6", "light": "#6c76a8" }, "usage": "Borders of interactive controls (inputs, secondary buttons, toggle tracks). 3:1 or better on every surface in both themes." },
+      { "name": "ink", "value": { "dark": "#e8ecff", "light": "#0b1030" }, "usage": "Primary text and icons on `bg`, `surface`, `surface-raised` and `surface-overlay`." },
+      { "name": "ink-muted", "value": { "dark": "#9ca5d4", "light": "#414a78" }, "usage": "Secondary text, labels, captions on `surface` and `surface-raised`." },
+      { "name": "ink-faint", "value": { "dark": "#8089bd", "light": "#5a6391" }, "usage": "Placeholders and disabled text on `surface` and `surface-raised`. Still 4.5:1 there." },
+      { "name": "cyan", "value": { "dark": "#00e5ff", "light": "#00c8e8" }, "usage": "Fill colour for primary buttons, toggle-on tracks, progress start and the signal gradient. Put `on-accent` text on it; do not use as text." },
+      { "name": "magenta", "value": { "dark": "#ff2bd6", "light": "#f01fc8" }, "usage": "Fill colour for the secondary accent: live or AI activity, selection highlights, progress end of the signal gradient. Put `on-accent` text on it." },
+      { "name": "cyan-ink", "value": { "dark": "#19e6ff", "light": "#00657d" }, "usage": "Cyan as text, icon, link, focus ring and border on `bg`, `surface`, `surface-raised`, `surface-overlay`. 4.5:1 or better in both themes." },
+      { "name": "magenta-ink", "value": { "dark": "#ff6be2", "light": "#a8008a" }, "usage": "Magenta as text, icon and border on `bg`, `surface`, `surface-raised`, `surface-overlay`. 4.5:1 or better in both themes." },
+      { "name": "cyan-tint", "value": { "dark": "rgba(0, 229, 255, 0.10)", "light": "rgba(0, 101, 125, 0.08)" }, "usage": "Background wash behind cyan badges, info alerts and hovered ghost buttons. Text on it is `cyan-ink` or `ink`." },
+      { "name": "magenta-tint", "value": { "dark": "rgba(255, 43, 214, 0.12)", "light": "rgba(168, 0, 138, 0.08)" }, "usage": "Background wash behind magenta badges and live-state alerts. Text on it is `magenta-ink` or `ink`." },
+      { "name": "on-accent", "value": { "dark": "#02101a", "light": "#02101a" }, "usage": "Text and icons on `cyan` and `magenta` fills. 6:1 or better on both fills in both themes." },
+      { "name": "focus-ring", "value": "{cyan-ink}", "usage": "2px keyboard focus outline, offset 2px, on every interactive element. 3:1 or better on all surfaces." },
+      { "name": "success", "value": { "dark": "#2de2a6", "light": "#00704f" }, "usage": "Success text, icon and border on surfaces. Always pair with the word or a check glyph, never colour alone." },
+      { "name": "warning", "value": { "dark": "#ffc233", "light": "#7f5400" }, "usage": "Warning text, icon and border on surfaces. Always pair with a word or a ! glyph." },
+      { "name": "danger", "value": { "dark": "#ff6482", "light": "#c4003a" }, "usage": "Error and destructive text, icon and border on surfaces. Always pair with a word or an x glyph. Lighter than `success` in dark, darker in light, so the pair also differs in lightness." }
+    ]
+  },
+  "type": {
+    "fonts": [],
+    "families": {
+      "display": "\"Chakra Petch\", \"Rajdhani\", system-ui, sans-serif",
+      "sans": "\"IBM Plex Sans\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+      "mono": "\"JetBrains Mono\", ui-monospace, \"Cascadia Code\", Consolas, monospace"
+    },
+    "groups": [
+      {
+        "name": "Display",
+        "family": "display",
+        "styles": [
+          { "name": "display-xl", "fontSize": "40px", "lineHeight": "44px", "fontWeight": 700, "letterSpacing": "0.04em", "sample": "SYSTEM ONLINE", "usage": "Splash, empty-state and onboarding headlines. Set uppercase." },
+          { "name": "display-lg", "fontSize": "28px", "lineHeight": "32px", "fontWeight": 700, "letterSpacing": "0.04em", "sample": "Signal Monitor", "usage": "Window and page titles. Set uppercase." },
+          { "name": "heading", "fontSize": "20px", "lineHeight": "26px", "fontWeight": 600, "letterSpacing": "0.02em", "sample": "Capture queue", "usage": "Section headings inside a window. Sentence case." },
+          { "name": "label", "fontSize": "11px", "lineHeight": "14px", "fontWeight": 600, "letterSpacing": "0.14em", "sample": "SESSION STATUS", "usage": "Panel titles, table headers, button text, tab text, badges. Set uppercase." }
+        ]
+      },
+      {
+        "name": "Text",
+        "family": "sans",
+        "styles": [
+          { "name": "title", "fontSize": "16px", "lineHeight": "22px", "fontWeight": 600, "sample": "Export complete", "usage": "Card titles, dialog titles, list item primary line." },
+          { "name": "body", "fontSize": "14px", "lineHeight": "20px", "fontWeight": 400, "sample": "Files are synced every five minutes.", "usage": "Default UI and paragraph text. The desktop base size." },
+          { "name": "body-sm", "fontSize": "12.5px", "lineHeight": "18px", "fontWeight": 400, "sample": "Last run 09:41, 3 warnings", "usage": "Helper text, captions, status bar text." }
+        ]
+      },
+      {
+        "name": "Data",
+        "family": "mono",
+        "styles": [
+          { "name": "mono", "fontSize": "13px", "lineHeight": "18px", "fontWeight": 400, "sample": "0x1F4A  12.48 MB/s", "usage": "Code, paths, logs, numeric fields and table figures." },
+          { "name": "mono-sm", "fontSize": "11.5px", "lineHeight": "16px", "fontWeight": 500, "letterSpacing": "0.02em", "sample": "v2.4.1 · 14:02:09", "usage": "Timestamps, version tags, shortcut hints, dense table cells." }
+        ]
+      }
+    ]
+  },
+  "spacing": {
+    "tokens": [
+      { "name": "space-1", "value": "4px", "usage": "Icon-to-text gap, tight inline spacing." },
+      { "name": "space-2", "value": "8px", "usage": "Gap between related controls, list item padding." },
+      { "name": "space-3", "value": "12px", "usage": "Input horizontal padding, compact panel padding." },
+      { "name": "space-4", "value": "16px", "usage": "Default panel padding, gap between form fields." },
+      { "name": "space-5", "value": "24px", "usage": "Gap between panels, section spacing." },
+      { "name": "space-6", "value": "32px", "usage": "Window content margin, large section gaps." },
+      { "name": "space-7", "value": "48px", "usage": "Empty-state and splash vertical rhythm." }
+    ]
+  },
+  "radius": {
+    "tokens": [
+      { "name": "radius-sm", "value": "2px", "usage": "Badges, checkboxes, table selection outline." },
+      { "name": "radius-md", "value": "6px", "usage": "Buttons, inputs, toggles, menus." },
+      { "name": "radius-lg", "value": "10px", "usage": "Panels, dialogs, alerts." },
+      { "name": "radius-pill", "value": "999px", "usage": "Toggle thumbs, progress bars, status dots." }
+    ]
+  },
+  "size": {
+    "tokens": [
+      { "name": "control-sm", "value": "24px", "usage": "Compact button and badge height." },
+      { "name": "control-md", "value": "32px", "usage": "Default button, input, select and tab height." },
+      { "name": "control-lg", "value": "40px", "usage": "Primary call-to-action and search field height." },
+      { "name": "titlebar", "value": "36px", "usage": "Custom window title bar height." },
+      { "name": "statusbar", "value": "24px", "usage": "Bottom status bar height." },
+      { "name": "sidebar", "value": "208px", "usage": "Default sidebar width; collapses to 48px." }
+    ]
+  },
+  "shadow": {
+    "tokens": [
+      { "name": "glow-cyan", "value": { "dark": "0 0 0 1px rgba(0, 229, 255, 0.55), 0 0 18px rgba(0, 229, 255, 0.30)", "light": "0 0 0 1px rgba(0, 101, 125, 0.60), 0 4px 14px rgba(0, 200, 232, 0.28)" }, "usage": "Hover and focus-within on cyan controls, active nav item. The only glow; never on body text." },
+      { "name": "glow-magenta", "value": { "dark": "0 0 0 1px rgba(255, 43, 214, 0.55), 0 0 18px rgba(255, 43, 214, 0.30)", "light": "0 0 0 1px rgba(168, 0, 138, 0.60), 0 4px 14px rgba(240, 31, 200, 0.25)" }, "usage": "Hover on magenta controls and the live-activity indicator." },
+      { "name": "elevation", "value": { "dark": "0 12px 32px rgba(0, 0, 0, 0.55)", "light": "0 12px 28px rgba(11, 16, 48, 0.16)" }, "usage": "Menus, popovers and dialogs floating above the window." }
+    ]
+  },
+  "duration": {
+    "tokens": [
+      { "name": "dur-fast", "value": "120ms", "usage": "Hover, press and focus transitions." },
+      { "name": "dur-base", "value": "200ms", "usage": "Tab switches, panel expand, toggle thumb." },
+      { "name": "dur-slow", "value": "360ms", "usage": "Window-level transitions and progress fill." },
+      { "name": "ease-out", "value": "cubic-bezier(0.2, 0.8, 0.2, 1)", "usage": "Default easing for every transition. Disable under prefers-reduced-motion." }
+    ]
+  }
+}

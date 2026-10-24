@@ -1,0 +1,34 @@
+{
+  "name": "TBJ Legacy Web",
+  "version": 1,
+  "note": "The palette already used across ~17 web repos (void + teal + gold, Space Grotesk / JetBrains Mono). Same token names as unified.json so apps can switch by swapping the file.",
+  "color": {
+    "themes": [{ "id": "dark", "name": "Dark" }, { "id": "light", "name": "Light" }],
+    "tokens": [
+      { "name": "bg",              "value": { "dark": "#050508", "light": "#F4F6F8" } },
+      { "name": "surface",         "value": { "dark": "#0A0E14", "light": "#FFFFFF" } },
+      { "name": "surface-raised",  "value": { "dark": "#111722", "light": "#EBEFF3" } },
+      { "name": "surface-overlay", "value": { "dark": "#18202E", "light": "#DFE5EB" } },
+      { "name": "line",            "value": { "dark": "#1F2937", "light": "#D1D9E0" } },
+      { "name": "line-strong",     "value": { "dark": "#4B5A6E", "light": "#6B7A8C" } },
+      { "name": "ink",             "value": { "dark": "#E8F0EF", "light": "#0A0E14" } },
+      { "name": "ink-muted",       "value": { "dark": "#9AA8B4", "light": "#46525E" } },
+      { "name": "ink-faint",       "value": { "dark": "#7D8B97", "light": "#5C6874" } },
+      { "name": "cyan",            "value": { "dark": "#00D4C8", "light": "#00B8AD" } },
+      { "name": "magenta",         "value": { "dark": "#F5C842", "light": "#E0B020" } },
+      { "name": "cyan-ink",        "value": { "dark": "#1DE0D4", "light": "#006B65" } },
+      { "name": "magenta-ink",     "value": { "dark": "#F5C842", "light": "#7A5C00" } },
+      { "name": "on-accent",       "value": { "dark": "#02100F", "light": "#02100F" } },
+      { "name": "success",         "value": { "dark": "#2DE2A6", "light": "#00704F" } },
+      { "name": "warning",         "value": { "dark": "#FFC233", "light": "#7F5400" } },
+      { "name": "danger",          "value": { "dark": "#FF6482", "light": "#C4003A" } }
+    ]
+  },
+  "type": {
+    "families": {
+      "display": "\"Space Grotesk\", system-ui, sans-serif",
+      "sans": "\"Space Grotesk\", system-ui, -apple-system, \"Segoe UI\", sans-serif",
+      "mono": "\"JetBrains Mono\", ui-monospace, \"Cascadia Code\", Consolas, monospace"
+    }
+  }
+}

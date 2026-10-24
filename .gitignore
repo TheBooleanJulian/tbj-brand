@@ -1,0 +1,21 @@
+# Seeded by tbj-brand (only written when a repo has no .gitignore).
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+*.sqlite3
+*.db
+dist/
+build/

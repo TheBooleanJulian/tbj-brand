@@ -1,0 +1,390 @@
+# Every repo, its tier (how much of the standard applies), venture (footer/brand),
+# and rollout wave (0 = canary, 1 = maintained products, 2 = everything else).
+# Seeded from the Oct 2026 audit — this file is meant to be hand-edited.
+# Keys: tier, venture, license (dual-agpl|mit|keep), relicense, description, homepage,
+#       successor, wave, skip = [check ids], notes
+
+[repo."3dp-tycoon"]
+tier = "themed"
+description = "Build your 3D printing empire from a single bedroom printer."
+wave = 2
+
+[repo."accurova-bni"]
+tier = "product"
+venture = "accurova"
+description = "A single page listing every BNI event gallery (LuxSync-backed Google Drive"
+homepage = "https://bni.accurova.com"
+wave = 1
+
+[repo."accurova-card"]
+tier = "product"
+venture = "accurova"
+description = "A digital business card / landing page for Accurova, scanned mostly via QR code off a physical card."
+wave = 1
+
+[repo."accurova-live-event"]
+tier = "product"
+venture = "accurova"
+description = "Mobile-first event landing page + admin dashboard — one deployment serves every live event via a unique QR-code URL."
+wave = 1
+
+[repo."accurova-loyalty"]
+tier = "product"
+venture = "accurova"
+description = "One points ledger, three access points: Telegram bot, web portal, QR codes."
+wave = 1
+
+[repo."accurova-photovault-tracker"]
+tier = "product"
+venture = "accurova"
+description = "A desktop app that scans your PhotoVault-style folders and keeps a Google Sheet of RAW-vs-processed shoot progress up to date."
+wave = 1
+
+[repo."accurova-site"]
+tier = "product"
+venture = "accurova"
+description = "Static site source for accurova.com — Julian Cheung's Singapore photography practice."
+homepage = "https://accurova.com"
+wave = 1
+
+[repo."accurova-workflow-dashboard"]
+tier = "product"
+venture = "accurova"
+description = "Photoshoot processing tracker for photography & videography, backed by a Google Sheet your scan script already writes to."
+wave = 1
+
+[repo."anydesk-reset"]
+tier = "tool"
+description = "Reset your AnyDesk ID cleanly — a Windows utility with backup/restore support."
+wave = 2
+
+[repo."are-you-donkey"]
+tier = "themed"
+description = "A single-file Dunning-Kruger quizlet that plots your confidence vs. your actual score — so you can see exactly where you land."
+wave = 2
+
+[repo."blue-screen-effect-OpenCV"]
+tier = "external"
+license = "keep"
+description = "Chroma-key (blue/green screen) effect for images and video using OpenCV and Python."
+wave = 2
+notes = "Fork carrying AGPLv3 + commercial licence — review."
+
+[repo."bootstrap-devfolio-01"]
+tier = "archive"
+license = "keep"
+description = "Photog portfolio made with Bootstrap 5"
+successor = "thebooleanjulian.github.io"
+wave = 2
+
+[repo."chuckleclips"]
+tier = "themed"
+description = "Unified social media feed aggregator + website for Chuckleclips, a Singaporean comedy skit channel."
+wave = 2
+
+[repo."deckmate"]
+tier = "themed"
+description = "A beginner-friendly two-deck YouTube DJ mixer — beatmatching, crossfading, and tempo control, all client-side with no backend."
+wave = 2
+
+[repo."dontkenadoxx"]
+tier = "tool"
+description = "Telegram bot that geolocates any photo using Claude Vision and 10-category OSINT analysis."
+wave = 2
+
+[repo."exifinator"]
+tier = "product"
+venture = "accurova"
+description = "A lightweight local desktop tool for reading *and* batch-editing photo metadata — no browser, no upload."
+wave = 1
+
+[repo."followtrain"]
+tier = "archive"
+description = "Social following made easy — a platform for managing and growing your social presence."
+successor = "followtrain-v2"
+wave = 2
+
+[repo."followtrain-v2"]
+tier = "tool"
+description = "AirDrop for socials — one QR code, everyone follows everyone, no login required."
+wave = 2
+
+[repo."food-analyst-bot"]
+tier = "tool"
+description = "Telegram bot that analyzes food photos and tracks your nutrition — powered by Claude AI."
+wave = 2
+
+[repo."fortune-cookie-simulator"]
+tier = "themed"
+description = "Crack open virtual fortune cookies in your terminal — ASCII art included."
+wave = 2
+
+[repo."freellmapi"]
+tier = "external"
+license = "keep"
+description = "4 billion tokens per month.  29 free LLM providers. 358 free model endpoints. One OpenAI-compatible endpoint."
+wave = 2
+
+[repo."google-reviews-proxy"]
+tier = "tool"
+wave = 2
+
+[repo."helloworld01"]
+tier = "archive"
+wave = 2
+
+[repo."ig-uwu-bot"]
+tier = "tool"
+description = "Watches your Instagram account and auto-announces new posts to Telegram — no scraping, no stored password, no ban risk."
+wave = 2
+
+[repo."infinicanvas"]
+tier = "themed"
+description = "A real-time collaborative 65536×65536 pixel canvas — draw, type, and create together anywhere on an infinite grid."
+wave = 2
+
+[repo."invoice-forge"]
+tier = "product"
+description = "Single-page invoice generator for Upteach lessons and Accurova shoots, with PayNow QR."
+wave = 1
+notes = "Serves both Upteach and Accurova; kept under the TheBooleanJulian venture."
+
+[repo."iq-aptitude-test"]
+tier = "themed"
+description = "An interactive IQ aptitude practice quiz with 20 questions, instant feedback, and printable worksheet export."
+wave = 2
+
+[repo."Julian97.github.io"]
+tier = "archive"
+license = "keep"
+description = "Thanks for checking out the Best-README-Template. If you have a suggestion"
+successor = "thebooleanjulian.github.io"
+wave = 2
+
+[repo."juliancheung-landing"]
+tier = "tool"
+description = "Personal landing page for Julian Cheung Jun Yan, linking his three ventures in one place."
+wave = 2
+
+[repo."license-finder"]
+tier = "product"
+description = "Instantly find the right open-source license — for developers who don't want to read walls of legal text."
+wave = 1
+
+[repo."luxsync"]
+tier = "archive"
+venture = "accurova"
+description = "LuxSync is a secure photo gallery platform that seamlessly integrates Backblaze B2 storage with Supabase database management. It provides a password-protected a"
+successor = "luxsync-v3"
+wave = 2
+
+[repo."luxsync-v2"]
+tier = "archive"
+venture = "accurova"
+description = "A dark-themed React photo gallery with an editable bento grid, drag-and-drop reordering, and one-click static export."
+successor = "luxsync-v3"
+wave = 2
+
+[repo."luxsync-v3"]
+tier = "product"
+venture = "accurova"
+description = "A premium, dependency-free photo gallery that turns any public Google Drive or Dropbox folder into a scrollable, previewable, downloadable client gallery."
+wave = 1
+
+[repo."MacroPad"]
+tier = "tool"
+description = "AutoHotkey remapper for a 16-key + dual-encoder USB macro pad, with per-device kernel-level input capture."
+wave = 2
+
+[repo."mikew-gcal-v1"]
+tier = "archive"
+description = "Automatically scrapes Mikew's busking schedule and syncs it to Google Calendar with Telegram notifications."
+successor = "mikew-gcal-v3"
+wave = 2
+
+[repo."mikew-gcal-v2"]
+tier = "archive"
+description = "Scrapes a busker's performance schedule daily and syncs it automatically to Google Calendar."
+successor = "mikew-gcal-v3"
+wave = 2
+
+[repo."mikew-gcal-v3"]
+tier = "tool"
+description = "Telegram bot that scrapes FattKew / OneBoyBand's NAC busking schedule and posts it to a group chat — automatically or on demand."
+wave = 2
+
+[repo."miku-bday"]
+tier = "themed"
+venture = "fan"
+description = "A sci-fi futuristic countdown landing page for Hatsune Miku's 19th birthday celebration, with an auto-unlocking schedule and live leaderboard."
+wave = 2
+
+[repo."miku-figures"]
+tier = "themed"
+venture = "fan"
+description = "A complete, daily-updated Hatsune Miku figure database — scraped from MyFigureCollection.net and browsable in the browser."
+wave = 2
+
+[repo."miku-kahoot"]
+tier = "themed"
+venture = "fan"
+description = "A Kahoot-style live quiz built for Hatsune Miku's 19th birthday event — no player cap, FastAPI + native WebSockets."
+wave = 2
+
+[repo."miku-keytar"]
+tier = "themed"
+venture = "fan"
+description = "A playable two-axis web synthesizer inspired by the Ano Gakki instrument from Innocence."
+wave = 2
+
+[repo."miku-monday"]
+tier = "tool"
+venture = "fan"
+description = "A Telegram bot that posts a Hatsune Miku GIF every Monday and a randomised daily hype message with a Vocaloid song recommendation — zero setup for the channels that add it."
+wave = 2
+
+[repo."miku-ocr"]
+tier = "tool"
+venture = "fan"
+description = "A Telegram bot that reads text out of images — English, Japanese, or Chinese — and hands it back clean and copy-paste-ready, with optional translation between the three."
+wave = 0
+
+[repo."miku-singlish-word-of-the-day"]
+tier = "tool"
+venture = "fan"
+description = "A Telegram bot that posts a daily Singlish word at 6am SGT, paired with a fresh Miku-voiced example generated live by Gemini."
+wave = 2
+
+[repo."miku-watch"]
+tier = "themed"
+venture = "fan"
+description = "A single-file, dependency-free analog watch face in the browser — a Seiko-inspired teal-and-magenta dial with mechanical realism, personalization, and a 14-face collectible system."
+wave = 2
+
+[repo."mikuquest"]
+tier = "themed"
+venture = "fan"
+description = "Telegram-native gamified task manager with Helium-3 rewards, streaks & daily debrief — built for solopreneurs juggling too many things at once."
+wave = 2
+
+[repo."minutes-in-seconds"]
+tier = "product"
+description = "Speaker-diarized transcription for meetings and lectures — English & Mandarin, built with Whisper + pyannote + FastAPI."
+wave = 1
+
+[repo."monitoring-miku"]
+tier = "tool"
+venture = "fan"
+description = "Fleet operations bot that monitors, debugs, and operates your Zeabur-hosted Telegram bots from a single chat interface."
+wave = 2
+
+[repo."no-safe-orbit"]
+tier = "themed"
+description = "Back up now** — a dated copy in `backups/` beside the save), **Stats"
+wave = 2
+
+[repo."NumberGuessingGame"]
+tier = "themed"
+description = "A classic number guessing game in Python — Julian's first program, rebuilt from TI-84 BASIC."
+wave = 2
+
+[repo."pixel-scout"]
+tier = "product"
+description = "Live screen color picker and magnifier overlay for designers and developers."
+wave = 1
+
+[repo."pixiv-organiser"]
+tier = "tool"
+description = "Automatically tag your Pixiv bookmarks by category — based on artwork tags and NSFW rating."
+wave = 2
+
+[repo."probe-seo-analyzer"]
+tier = "product"
+description = "Point a URL at Probe and get an AI-powered audit covering SEO and AI-answer-engine readiness in seconds."
+wave = 1
+
+[repo."qr-forge"]
+tier = "product"
+license = "mit"
+description = "Single-file, browser-based QR code designer — no build step, no backend."
+wave = 0
+
+[repo."readme-forge"]
+tier = "product"
+description = "Drop a GitHub repo link in, get a README written from a template — instantly."
+wave = 0
+
+[repo."rothko-cal"]
+tier = "product"
+description = "A visual planning toolkit for turning Google Calendar into an intentional, legible system."
+wave = 1
+
+[repo."second-brain"]
+tier = "product"
+description = "A private, multi-user interview app that builds a personal \"second brain\" document across ten life domains."
+wave = 1
+
+[repo."see-your-voice"]
+tier = "product"
+description = "Live voice-to-keyboard visualisation and verbal-delivery trainer that runs entirely in the browser."
+wave = 1
+
+[repo."snake-game"]
+tier = "external"
+license = "keep"
+description = "A classic Snake game built in Python."
+wave = 2
+notes = "Fork carrying AGPLv3 + commercial licence — review."
+
+[repo."stream-overlay-studio"]
+tier = "product"
+description = "A drag-and-drop stream overlay designer for OBS."
+wave = 1
+
+[repo."Supercalifragilisticex"]
+tier = "tool"
+venture = "accurova"
+description = "A Telegram bot + FastAPI backend that turns a photo or message into a Google Calendar event — the foundation for Accurova Calendar, a photography business operations system."
+wave = 2
+
+[repo."tg-to-wa"]
+tier = "tool"
+description = "Auto-forward posts from a Telegram channel to a WhatsApp group — text, photos, videos, GIFs, audio, documents, stickers, and polls."
+wave = 2
+
+[repo."thebooleanjulian-bot-core"]
+tier = "tool"
+description = "Opt-in shared building blocks for TheBooleanJulian's Telegram bots — extracted from what the bots actually do, not designed top-down."
+wave = 1
+
+[repo."thebooleanjulian.github.io"]
+tier = "product"
+description = "Personal landing page and live project showcase for TheBooleanJulian."
+homepage = "https://thebooleanjulian.dev"
+wave = 1
+
+[repo."tideline"]
+tier = "tool"
+wave = 2
+notes = "Empty repository (no commits). Push a first commit or delete it."
+
+[repo."vaultflow-ingest"]
+tier = "product"
+venture = "accurova"
+description = "A Windows GUI tool that ingests SD card photos and video into a dated vault — sorted by capture date, deduped, verified, then ready to format."
+wave = 1
+
+[repo."web-search-ai-agent"]
+tier = "tool"
+license = "mit"
+wave = 2
+
+[repo."xymiku-site"]
+tier = "themed"
+venture = "fan"
+description = "MIKU IMAGES KAWAII UPLINK (M.I.K.U.)"
+wave = 2
+
+[repo."youtube-thumbnail-getter"]
+tier = "archive"
+wave = 2

@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Feedback form
+    url: https://forms.gle/qRCimSyoosWyNwXdA
+    about: Quick feedback without a GitHub account.
+  - name: thebooleanjulian.dev
+    url: https://thebooleanjulian.dev
+    about: Everything else, and other ways to get in touch.

@@ -1,0 +1,9 @@
+# Seeded by tbj-brand (only written when a repo has no .gitignore).
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
