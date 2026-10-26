@@ -18,6 +18,8 @@ How it works:
 | D2 | Supabase layout: one project, one schema per app. Cross-schema access allowed by explicit grant only? | Replaces separate Postgres (mikuquest, accurova-card, srv-3dp-tycoon, second-brain, accurova-live-event), SQLite (clawsune, luxsync-v3, accurova-live-event) and Redis (food-analyst-bot, miku-monday, infinicanvas) | open, planning |
 | D3 | Versioned repos: retire older versions instead of migrating them? | luxsync-v2 is `tier = "archive"` (successor luxsync-v3) but still runs on Zeabur | **resolved 2026-10-26**: retire superseded versions (luxsync-v2, and v1/v2 of anything with a later version). Suspend on Zeabur, don't migrate. |
 | D4 | Where wrangler config lives during migration | Staged in zeabur-migration/sites/ so repos stay untouched; target is `wrangler.jsonc` in each repo root (infra_host checks for it) | open |
+| D5 | Deploy-on-push for Workers | Zeabur redeployed on every push; Workers sites are deployed from Julian's machine today. Options: Cloudflare Workers Builds (connect repo in dashboard, needs wrangler.jsonc in repo) or a GitHub Action running `wrangler deploy` with a CLOUDFLARE_API_TOKEN secret. Workers Builds is the closer Zeabur equivalent and needs no token in GitHub. | open |
+| D6 | Large media (miku-bday dl/, 6 GB of mp4) | Workers static assets cap files at 25 MiB. R2 bucket + custom domain is the Cloudflare option (free tier 10 GB). | open |
 
 ## Baseline snapshot (2026-10-26)
 | Attribute | Finding |
@@ -60,5 +62,14 @@ Format: repo | category | what's different | suggested alignment | found during
 | 31 of 39 repos | ci | No GitHub Actions | Add proportionate CI where it has logic | scan |
 | luxsync-v2 | lifecycle | Archived in repos.toml but still deployed on Zeabur | Retire, don't migrate (D3) | migration |
 | thebooleanjulian-branding | tooling | No remote, no `dev` branch; `tbjsync` crashed printing on Windows (cp1252) | dev created; encoding fixed in v1.1.0; push + tag v1 still pending | alignment |
+| miku-bday | security | `ADMIN_KEY` shared secret hardcoded in admin.html (client-side); Apps Script URL never configured | Move admin auth server-side (Worker or Apps Script check), rotate key | migration |
+| miku-figures, readme-forge | uptime | Already returning 502 on Zeabur before migration (readme-forge deployment REMOVED) | Fleet has no uptime check; monitoring-miku only watches bots | migration |
+| minutes-in-seconds | deploy | Zeabur deployment stuck in BUILDING; Whisper + pyannote is too heavy for Workers/Vercel | Re-plan with hard group | migration |
+| accurova-bni | config | Build-time config.js generated from host env vars (zbpack.json + scripts/build.js) | Standard: public config via wrangler `vars` or committed config; secrets never in browser config | migration |
+| invoice-forge | structure | Express server whose only job is serving static files + /healthz | Drop server, serve public/ as Workers assets (done for hosting) | migration |
+| accurova-site, deckmate, others | routing | Zeabur served the homepage (200) for unknown paths; Caddyfile 404 page never actually applied | Workers assets: explicit `not_found_handling` per site (404-page or single-page-application) | migration |
+| all repos | line endings | Drive working copies are CRLF, deployed files LF | Add `.gitattributes` (`* text=auto eol=lf`) to the standard | migration |
+| food-analyst-bot, miku-monday | duplicate | Older Zeabur copies (deployment REMOVED) and live `-2` copies share one bot token | Retire originals (suspend pending Julian) | migration |
 | are-you-donkey | content drift | Zeabur copy (45,827 B) differs from repo HEAD (46,882 B): last deploy was behind the repo | Confirm repo HEAD is intended; note drift | migration |
 
+- deckmate, miku-watch, accurova-site, miku-figures, iq-aptitude-test, see-your-voice, miku-keytar, accurova-bni, invoice-forge: live on Workers 2026-10-26; configs in zeabur-migration/sites/.
