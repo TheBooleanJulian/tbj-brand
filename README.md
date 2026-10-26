@@ -84,7 +84,8 @@ git -C ~/code/qr-forge diff
 | File | What lives there |
 |---|---|
 | `brand.toml` | Standards version, enforcement, `auto_sync`, identity and domain, active palette, licence policy, branch policy, venture footers, tier → checks, README section order |
-| `repos.toml` | One entry per repo: `tier`, `venture`, `license`, `relicense`, `description`, `homepage`, `successor`, `wave`, `skip`, `notes` |
+| `repos.toml` | One entry per repo: `tier`, `venture`, `license`, `relicense`, `description`, `homepage`, `successor`, `wave`, `skip`, `notes`, `host`, `data` |
+| `docs/alignment.md` | Off-case register and open decisions that need a human call before they become a check or a repos.toml value |
 | `tokens/*.json` | `unified` (Julian Unified UI) and `legacy` (teal/gold) — same token names, so apps switch by swapping one file |
 
 ## Checks
@@ -106,6 +107,8 @@ git -C ~/code/qr-forge diff
 | `branch_main` | warn | — | Default branch is `main` (prints the rename command) |
 | `branch_dev` | info | — | `dev` branch exists |
 | `zeabur` | warn | — | Files still referencing Zeabur (migration tracker) |
+| `infra_host` | warn | — | Repo matches its `host` in repos.toml: wrangler config present for Workers, no leftover Zeabur/container files (`Caddyfile`, `Procfile`, `zeabur.json`, `Dockerfile`) |
+| `data_store` | warn | — | Code only uses its declared `data` store (Supabase schema, Telegram serverless SQLite, or none); flags leftover SQLite/Redis/Postgres |
 | `ui_tokens` | warn | vendors tokens | Off-palette colours / fonts; keeps `brand/tokens.css` current |
 
 ## Project Structure
@@ -116,12 +119,14 @@ tokens/      unified.json, legacy.json
 templates/   files/ (licences, editorconfig, gitignore/, tbj-workflow.yml), readme/skeleton.md
 tbjsync/     config.py, blocks.py, render.py, checks.py, __main__.py
 dist/        generated tokens.css|py|ts, profile-README.md, projects.json
+docs/        alignment.md (off-case register + open decisions)
 dotgithub/   contents for TheBooleanJulian/.github
 tests/       pytest suite
 ```
 
 ## Changelog
 
+- **v1.1.0** — *2026-10-26* — Infrastructure alignment: `[infra]` policy in brand.toml, per-repo `host` / `data`, report-only `infra_host` and `data_store` checks, `docs/alignment.md` off-case register, UTF-8 console output on Windows.
 - **v1.0.0** — *2026-10-25* — Initial release: 16 checks, managed blocks with legacy migration, wave-based PR sync, reusable conformance/Python/Node CI, two token palettes, profile generator, `.github` community files.
 
 <!-- tbj:license:start · managed by tbj-brand — edits inside are overwritten -->

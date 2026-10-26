@@ -8,7 +8,7 @@
 [standards]
 # Bump on every change that alters what repos must contain (semver).
 # Each synced repo records the version it conforms to in .tbj.toml.
-version = "1.0.0"
+version = "1.1.0"
 # "warn"  → conformance CI reports problems but never fails a build.
 # "error" → conformance CI fails on any error-level check. Flip once rollout is done.
 enforce = "warn"
@@ -42,6 +42,23 @@ badge.legacy  = "00D4C8"
 default = "dual-agpl"
 copyright_holder = "Julian Cheung (TheBooleanJulian)"
 
+[infra]
+# Where repos run and keep data after the Zeabur shutdown (Dec 2026). Per-repo `host` and `data`
+# in repos.toml must be one of these. The infra_host / data_store checks only report, never edit.
+#   cloudflare-workers  → Worker (static assets and/or JS), wrangler.jsonc at the repo root
+#   telegram-serverless → Telegram-hosted JS bot (handlers/, lib/, schema.js), no polling
+#   vercel              → fallback when neither of the above fits
+#   local               → desktop/CLI tool, not hosted
+hosts = ["cloudflare-workers", "telegram-serverless", "vercel", "local"]
+#   supabase    → the one shared Supabase project, one schema per app
+#   tg-sqlite   → Telegram serverless built-in SQLite (bots only)
+#   none        → no persistent data
+data = ["supabase", "tg-sqlite", "none"]
+# Files that only made sense on Zeabur / a long-running container. Reported once a repo has moved.
+legacy_files = ["zeabur.json", "zbpack.json", "Procfile", "Caddyfile", "Dockerfile", "docker-compose.yml"]
+# Hosts that need a wrangler config at the root.
+wrangler_hosts = ["cloudflare-workers"]
+
 [branches]
 # PRs from the sync bot target `dev` when it exists, otherwise the default branch,
 # matching the feature → dev → main flow.
@@ -74,15 +91,15 @@ footer = 'A fan project · Built by <a href="{github}">{handle}</a> · <a href="
 # Each tier lists the check ids that run. See tbjsync/checks.py for definitions.
 [tiers.product]
 about  = "Maintained, public-facing. Full standard, including UI tokens."
-checks = ["marker", "readme", "badges", "license_section", "footer", "sections", "license_files", "editorconfig", "gitignore", "ci", "branch_main", "branch_dev", "zeabur", "ui_tokens"]
+checks = ["marker", "readme", "badges", "license_section", "footer", "sections", "license_files", "editorconfig", "gitignore", "ci", "branch_main", "branch_dev", "zeabur", "infra_host", "data_store", "ui_tokens"]
 
 [tiers.tool]
 about  = "Utilities, bots, scripts. Full repo chrome; UI is advisory."
-checks = ["marker", "readme", "badges", "license_section", "footer", "sections", "license_files", "editorconfig", "gitignore", "ci", "branch_main", "zeabur"]
+checks = ["marker", "readme", "badges", "license_section", "footer", "sections", "license_files", "editorconfig", "gitignore", "ci", "branch_main", "zeabur", "infra_host", "data_store"]
 
 [tiers.themed]
 about  = "Games, fan and creative projects with their own visual identity. Repo chrome only; UI exempt."
-checks = ["marker", "readme", "badges", "license_section", "footer", "license_files", "editorconfig", "gitignore", "ci", "zeabur"]
+checks = ["marker", "readme", "badges", "license_section", "footer", "license_files", "editorconfig", "gitignore", "ci", "zeabur", "infra_host", "data_store"]
 
 [tiers.archive]
 about  = "Superseded or historical. Banner + footer only, then archive on GitHub."

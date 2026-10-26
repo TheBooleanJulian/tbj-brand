@@ -1,0 +1,64 @@
+# Alignment register
+
+The human-judgement half of tbj-brand. `tbjsync audit` finds drift it can measure; this file records
+the off-cases that need a decision, and what each one should become. Started during the Zeabur
+shutdown migration (Oct 2026); migration progress itself lives in `../zeabur-migration/progress.md`.
+
+How it works:
+- Measurable drift becomes a check (see `tbjsync/checks.py`). Infra drift is covered by
+  `infra_host` and `data_store`, driven by `host` / `data` in repos.toml and `[infra]` in brand.toml.
+- Anything needing a call (database consolidation, palette, deleting a service) stays here as a row
+  until Julian decides, then becomes either a repos.toml value or a check.
+- Rows are never deleted: mark them **resolved** with the date and what was done.
+
+## Open decisions (need Julian)
+| # | Decision | Context | Status |
+|---|---|---|---|
+| D1 | Which palette is the standard: `unified` (cyan #00E5FF / magenta #FF2BD6, Chakra Petch + IBM Plex Sans, light mode) or `legacy` (teal #00D4C8 / gold #F5C842, Space Grotesk, dark only)? | brand.toml has `palette.active = "unified"` and `julian-unified-ui-design-system.md` (desktop spec) is in progress, but global AGENTS.md / CLAUDE.md still mandate legacy teal/gold, dark only. Agents follow AGENTS.md until this is settled. | open |
+| D2 | Supabase layout: one project, one schema per app. Cross-schema access allowed by explicit grant only? | Replaces separate Postgres (mikuquest, accurova-card, srv-3dp-tycoon, second-brain, accurova-live-event), SQLite (clawsune, luxsync-v3, accurova-live-event) and Redis (food-analyst-bot, miku-monday, infinicanvas) | open, planning |
+| D3 | Archived repos still deployed: retire instead of migrate? | luxsync-v2 is `tier = "archive"` (successor luxsync-v3) but still runs on Zeabur | open |
+| D4 | Where wrangler config lives during migration | Staged in zeabur-migration/sites/ so repos stay untouched; target is `wrangler.jsonc` in each repo root (infra_host checks for it) | open |
+
+## Baseline snapshot (2026-10-26)
+| Attribute | Finding |
+|---|---|
+| Language | python 16, node 11, static 7, unclear 5 |
+| Default branch | main 20, master 12, other/feature branch checked out 7 |
+| `dev` branch exists (global workflow needs it) | only 11 of 39 |
+| Dockerfile | 13 of 39 |
+| Caddyfile | 1 (accurova-site) |
+| Procfile | 5 (bot-core-canary, clawsune, luxsync-v3, probe-seo-analyzer, openclaw) |
+| zeabur.json | 3 (chuckleclips, mikew-gcal-v3, monitoring-miku) |
+| CI workflows | 8 of 39 |
+| Tests | 2 of 39 |
+| .env.example | 16 of 39 |
+| AGENTS.md / handover.md / CHANGELOG.md | 1 / 1 / 1 |
+| README, LICENSE | 39 / 35 |
+| Database | none 29, redis 3, postgres 3-4, sqlite 3, supabase 1 (xymiku-site) |
+| Frameworks | telegram bots 10, fastapi 5-6, express 7, vite 5, next 1, flask 1 |
+
+
+## Off-case register
+Format: repo | category | what's different | suggested alignment | found during
+| Repo | Category | Off-case | Suggested alignment | Found during |
+|---|---|---|---|---|
+| accurova-site | web server | Only repo with a Caddyfile | Replace with `_headers`/`_redirects` on Workers assets | scan |
+| xymiku-site | database | Only repo using Supabase; Next.js on a separate Cloudflare account | Fold into the consolidated Supabase project (own schema); account now unified via admin invite | scan |
+| clawsune, luxsync-v3, accurova-live-event | database | SQLite used inside long-running Python services | Decide per app: Supabase schema or Telegram-serverless SQLite | scan |
+| mikuquest, accurova-card, accurova-live-event, second-brain | database | Separate Postgres instances (some on Zeabur) | Consolidate into one Supabase project, schema per app | scan |
+| food-analyst-bot, miku-monday, infinicanvas | database | Redis dependency | Replace with Supabase table or Durable Object/KV | scan |
+| 12 repos | git | Default branch is `master` not `main` | Rename to `main` | scan |
+| 28 of 39 repos | git | No `dev` branch | Create `dev` per global workflow | scan |
+| clawsune, miku-singlish-word-of-the-day, luxsync-v3, miku-ocr, accurova-card, invoice-forge | git | Local checkout sits on a feature branch, unmerged work possible | Check for unmerged changes before touching | scan |
+| chuckleclips, mikew-gcal-v3, monitoring-miku | deploy | zeabur.json present | Remove after cutover | scan |
+| bot-core-canary, clawsune, luxsync-v3, probe-seo-analyzer, openclaw | deploy | Procfile and often a Dockerfile both exist | Pick one; both go once off Zeabur | scan |
+| accurova-workflow-dashboard, accurova-loyalty, rothko-cal | structure | No recognizable manifest locally | Locate real source, align layout | scan |
+| accurova-ai-web-search, srv-3dp-tycoon | source | Deployed on Zeabur but no local repo folder | Pull from GitHub, add to workspace | scan |
+| food-analyst-bot, miku-monday | duplicate | Two Zeabur projects each (`-2` copies) | Confirm duplicates, retire extras | scan |
+| openclaw | duplicate | Likely stale copy of clawsune (see memory) | Archive | scan |
+| 37 of 39 repos | tests | No tests dir | Add only for core logic, per global rule | scan |
+| 31 of 39 repos | ci | No GitHub Actions | Add proportionate CI where it has logic | scan |
+| luxsync-v2 | lifecycle | Archived in repos.toml but still deployed on Zeabur | Retire, don't migrate (D3) | migration |
+| thebooleanjulian-branding | tooling | No remote, no `dev` branch; `tbjsync` crashed printing on Windows (cp1252) | dev created; encoding fixed in v1.1.0; push + tag v1 still pending | alignment |
+| are-you-donkey | content drift | Zeabur copy (45,827 B) differs from repo HEAD (46,882 B): last deploy was behind the repo | Confirm repo HEAD is intended; note drift | migration |
+

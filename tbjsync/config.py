@@ -72,6 +72,8 @@ class RepoEntry:
     wave: int = 2                       # rollout wave: 0 canary, 1 early, 2 everyone
     skip: list[str] = field(default_factory=list)  # check ids to skip for this repo
     notes: str = ""
+    host: str = ""                      # target platform, one of [infra].hosts ("" = not decided yet)
+    data: str = ""                      # target data store, one of [infra].data ("" = not decided yet)
 
 
 def load_manifest(root: Path | None = None) -> dict[str, RepoEntry]:
