@@ -189,3 +189,47 @@ def test_both_palettes_generate(palette):
     b.raw["palette"]["active"] = palette
     assert "--bg:" in render.tokens_css(b)
     assert "DARK" in render.tokens_py(b)
+
+
+def find(findings, cid):
+    return next(f for f in findings if f.check == cid)
+
+
+def test_infra_host_flags_zeabur_leftovers(tmp_path):
+    ctx = make_repo(tmp_path, {"README.md": "# X\n\nHi.\n", "index.html": "<p>x</p>", "Caddyfile": ":80",
+                               "zeabur.json": "{}"}, RepoEntry(name="demo", host="cloudflare-workers", data="none"))
+    f = find(checks.run(ctx)[0], "infra_host")
+    assert f.status == checks.MANUAL
+    assert "no wrangler config" in f.message and "Caddyfile" in f.message and "zeabur.json" in f.message
+    assert (ctx.path / "Caddyfile").exists()  # report only: never deleted
+
+
+def test_infra_host_passes_when_migrated(tmp_path):
+    ctx = make_repo(tmp_path, {"README.md": "# X\n\nHi.\n", "index.html": "<p>x</p>", "wrangler.jsonc": "{}"},
+                    RepoEntry(name="demo", host="cloudflare-workers", data="none"))
+    assert find(checks.run(ctx)[0], "infra_host").status == checks.PASS
+
+
+def test_infra_host_unset_is_reported(tmp_path):
+    ctx = make_repo(tmp_path, {"README.md": "# X\n\nHi.\n", "Procfile": "web: x"})
+    f = find(checks.run(ctx)[0], "infra_host")
+    assert f.status == checks.MANUAL and "no host set" in f.message and "Procfile" in f.message
+
+
+def test_data_store_flags_leftover_databases(tmp_path):
+    ctx = make_repo(tmp_path, {"README.md": "# X\n\nHi.\n", "app.py": "import sqlite3\nimport redis\n"},
+                    RepoEntry(name="demo", host="vercel", data="supabase"))
+    f = find(checks.run(ctx)[0], "data_store")
+    assert f.status == checks.MANUAL and "redis" in f.message and "sqlite" in f.message
+
+
+def test_data_store_supabase_allows_postgres(tmp_path):
+    ctx = make_repo(tmp_path, {"README.md": "# X\n\nHi.\n", "requirements.txt": "supabase\npsycopg[binary]\n"},
+                    RepoEntry(name="demo", host="vercel", data="supabase"))
+    assert find(checks.run(ctx)[0], "data_store").status == checks.PASS
+
+
+def test_data_store_tg_sqlite_allows_sqlite(tmp_path):
+    ctx = make_repo(tmp_path, {"README.md": "# X\n\nHi.\n", "lib/db.js": "// sqlite3 via sdk\n"},
+                    RepoEntry(name="demo", host="telegram-serverless", data="tg-sqlite"))
+    assert find(checks.run(ctx)[0], "data_store").status == checks.PASS

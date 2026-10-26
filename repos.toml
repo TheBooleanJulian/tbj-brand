@@ -2,7 +2,8 @@
 # and rollout wave (0 = canary, 1 = maintained products, 2 = everything else).
 # Seeded from the Oct 2026 audit — this file is meant to be hand-edited.
 # Keys: tier, venture, license (dual-agpl|mit|keep), relicense, description, homepage,
-#       successor, wave, skip = [check ids], notes
+#       successor, wave, skip = [check ids], notes,
+#       host (see brand.toml [infra].hosts), data (see [infra].data)
 
 [repo."3dp-tycoon"]
 tier = "themed"
@@ -46,6 +47,8 @@ venture = "accurova"
 description = "Static site source for accurova.com — Julian Cheung's Singapore photography practice."
 homepage = "https://accurova.com"
 wave = 1
+host = "cloudflare-workers"
+data = "none"
 
 [repo."accurova-workflow-dashboard"]
 tier = "product"
@@ -62,6 +65,8 @@ wave = 2
 tier = "themed"
 description = "A single-file Dunning-Kruger quizlet that plots your confidence vs. your actual score — so you can see exactly where you land."
 wave = 2
+host = "cloudflare-workers"
+data = "none"
 
 [repo."blue-screen-effect-OpenCV"]
 tier = "external"
@@ -86,6 +91,8 @@ wave = 2
 tier = "themed"
 description = "A beginner-friendly two-deck YouTube DJ mixer — beatmatching, crossfading, and tempo control, all client-side with no backend."
 wave = 2
+host = "cloudflare-workers"
+data = "none"
 
 [repo."dontkenadoxx"]
 tier = "tool"
@@ -153,6 +160,8 @@ notes = "Serves both Upteach and Accurova; kept under the TheBooleanJulian ventu
 tier = "themed"
 description = "An interactive IQ aptitude practice quiz with 20 questions, instant feedback, and printable worksheet export."
 wave = 2
+host = "cloudflare-workers"
+data = "none"
 
 [repo."Julian97.github.io"]
 tier = "archive"
@@ -165,6 +174,8 @@ wave = 2
 tier = "tool"
 description = "Personal landing page for Julian Cheung Jun Yan, linking his three ventures in one place."
 wave = 2
+host = "cloudflare-workers"
+data = "none"
 
 [repo."license-finder"]
 tier = "product"
@@ -224,6 +235,8 @@ tier = "themed"
 venture = "fan"
 description = "A complete, daily-updated Hatsune Miku figure database — scraped from MyFigureCollection.net and browsable in the browser."
 wave = 2
+host = "cloudflare-workers"
+data = "none"
 
 [repo."miku-kahoot"]
 tier = "themed"
@@ -236,6 +249,8 @@ tier = "themed"
 venture = "fan"
 description = "A playable two-axis web synthesizer inspired by the Ano Gakki instrument from Innocence."
 wave = 2
+host = "cloudflare-workers"
+data = "none"
 
 [repo."miku-monday"]
 tier = "tool"
@@ -260,6 +275,8 @@ tier = "themed"
 venture = "fan"
 description = "A single-file, dependency-free analog watch face in the browser — a Seiko-inspired teal-and-magenta dial with mechanical realism, personalization, and a 14-face collectible system."
 wave = 2
+host = "cloudflare-workers"
+data = "none"
 
 [repo."mikuquest"]
 tier = "themed"
@@ -328,6 +345,8 @@ wave = 1
 tier = "product"
 description = "Live voice-to-keyboard visualisation and verbal-delivery trainer that runs entirely in the browser."
 wave = 1
+host = "cloudflare-workers"
+data = "none"
 
 [repo."snake-game"]
 tier = "external"

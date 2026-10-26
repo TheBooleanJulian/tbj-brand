@@ -342,6 +342,70 @@ def c_zeabur(ctx, ws):
     return Finding("zeabur", "warn", MANUAL, f"{len(hits)} file(s) still reference Zeabur", hits[:8])
 
 
+@check("infra_host", "Hosting matches the declared target")
+def c_infra_host(ctx, ws):
+    infra = ctx.brand.raw["infra"]
+    host = ctx.entry.host
+    root_names = {p.name for p in ctx.files if p.parent == ctx.path}
+    legacy = sorted(n for n in infra["legacy_files"] if n in root_names)
+    if not host:
+        msg = "no host set in repos.toml"
+        return Finding("infra_host", "warn", MANUAL, msg + (f"; legacy deploy files: {', '.join(legacy)}" if legacy else ""), legacy)
+    if host not in infra["hosts"]:
+        return Finding("infra_host", "warn", MANUAL, f"host '{host}' is not one of {', '.join(infra['hosts'])}")
+    problems = []
+    if host in infra["wrangler_hosts"] and not root_names & {"wrangler.jsonc", "wrangler.json", "wrangler.toml"}:
+        problems.append("no wrangler config at the root")
+    if legacy:
+        problems.append("legacy deploy files: " + ", ".join(legacy))
+    if not problems:
+        return Finding("infra_host", "warn", PASS)
+    return Finding("infra_host", "warn", MANUAL, f"{host}: " + "; ".join(problems), legacy)
+
+
+DATA_SIGNS = {
+    "sqlite": re.compile(r"\bsqlite3\b|aiosqlite|better-sqlite3|sqlite:///"),
+    "redis": re.compile(r"\bredis\b|\bioredis\b"),
+    "postgres": re.compile(r"psycopg|asyncpg|postgres(?:ql)?://|\"pg\"\s*:"),
+    "supabase": re.compile(r"supabase"),
+}
+
+
+def detect_data(ctx) -> set[str]:
+    found = set()
+    for p in ctx.files:
+        if p.suffix.lower() not in (".py", ".js", ".mjs", ".ts", ".toml", ".txt", ".json", ".example") or p.name == "package-lock.json":
+            continue
+        try:
+            if p.stat().st_size > 300_000:
+                continue
+            s = p.read_text(errors="ignore").lower()
+        except OSError:
+            continue
+        found |= {k for k, rx in DATA_SIGNS.items() if rx.search(s)}
+    return found
+
+
+@check("data_store", "Data store matches the declared target")
+def c_data_store(ctx, ws):
+    want = ctx.entry.data
+    seen = detect_data(ctx)
+    # Supabase is Postgres underneath; a supabase repo talking to postgres is fine.
+    extra = seen - {"supabase"} - ({"postgres"} if want == "supabase" else set())
+    if want == "tg-sqlite":
+        extra -= {"sqlite"}
+    found = ", ".join(sorted(seen)) or "none detected"
+    if not want:
+        return Finding("data_store", "warn", MANUAL, f"no data target set in repos.toml; uses {found}")
+    if want not in ctx.brand.raw["infra"]["data"]:
+        return Finding("data_store", "warn", MANUAL, f"data '{want}' is not one of {', '.join(ctx.brand.raw['infra']['data'])}")
+    if want == "none" and seen:
+        return Finding("data_store", "warn", MANUAL, f"declared none but uses {found}")
+    if extra:
+        return Finding("data_store", "warn", MANUAL, f"declared {want} but still uses {', '.join(sorted(extra))}")
+    return Finding("data_store", "warn", PASS)
+
+
 # ── UI tokens ───────────────────────────────────────────────────────────────
 HEX = re.compile(r"#[0-9a-fA-F]{6}\b")
 FONT = re.compile(r"font-family\s*:\s*['\"]?([A-Za-z][\w \-]+)|family=([A-Za-z+]+)")
