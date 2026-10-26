@@ -14,9 +14,9 @@ How it works:
 ## Open decisions (need Julian)
 | # | Decision | Context | Status |
 |---|---|---|---|
-| D1 | Which palette is the standard: `unified` (cyan #00E5FF / magenta #FF2BD6, Chakra Petch + IBM Plex Sans, light mode) or `legacy` (teal #00D4C8 / gold #F5C842, Space Grotesk, dark only)? | brand.toml has `palette.active = "unified"` and `julian-unified-ui-design-system.md` (desktop spec) is in progress, but global AGENTS.md / CLAUDE.md still mandate legacy teal/gold, dark only. Agents follow AGENTS.md until this is settled. | open |
+| D1 | Which palette is the standard: `unified` (cyan #00E5FF / magenta #FF2BD6, Chakra Petch + IBM Plex Sans, light mode) or `legacy` (teal #00D4C8 / gold #F5C842, Space Grotesk, dark only)? | brand.toml has `palette.active = "unified"` and `julian-unified-ui-design-system.md` (desktop spec) is in progress, but global AGENTS.md / CLAUDE.md still mandate legacy teal/gold, dark only. Agents follow AGENTS.md until this is settled. | **resolved 2026-10-26**: Unified UI takes precedence. Global AGENTS.md / CLAUDE.md / design rules updated to match; legacy palette kept in tokens/legacy.json for un-migrated apps only. |
 | D2 | Supabase layout: one project, one schema per app. Cross-schema access allowed by explicit grant only? | Replaces separate Postgres (mikuquest, accurova-card, srv-3dp-tycoon, second-brain, accurova-live-event), SQLite (clawsune, luxsync-v3, accurova-live-event) and Redis (food-analyst-bot, miku-monday, infinicanvas) | open, planning |
-| D3 | Archived repos still deployed: retire instead of migrate? | luxsync-v2 is `tier = "archive"` (successor luxsync-v3) but still runs on Zeabur | open |
+| D3 | Versioned repos: retire older versions instead of migrating them? | luxsync-v2 is `tier = "archive"` (successor luxsync-v3) but still runs on Zeabur | **resolved 2026-10-26**: retire superseded versions (luxsync-v2, and v1/v2 of anything with a later version). Suspend on Zeabur, don't migrate. |
 | D4 | Where wrangler config lives during migration | Staged in zeabur-migration/sites/ so repos stay untouched; target is `wrangler.jsonc` in each repo root (infra_host checks for it) | open |
 
 ## Baseline snapshot (2026-10-26)
