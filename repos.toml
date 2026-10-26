@@ -16,6 +16,8 @@ venture = "accurova"
 description = "A single page listing every BNI event gallery (LuxSync-backed Google Drive"
 homepage = "https://bni.accurova.com"
 wave = 1
+host = "cloudflare-workers"
+data = "supabase"
 
 [repo."accurova-card"]
 tier = "product"
@@ -154,6 +156,8 @@ wave = 2
 tier = "product"
 description = "Single-page invoice generator for Upteach lessons and Accurova shoots, with PayNow QR."
 wave = 1
+host = "cloudflare-workers"
+data = "none"
 notes = "Serves both Upteach and Accurova; kept under the TheBooleanJulian venture."
 
 [repo."iq-aptitude-test"]
@@ -191,6 +195,7 @@ wave = 2
 
 [repo."luxsync-v2"]
 tier = "archive"
+notes = "Retired 2026-10-26, not migrated off Zeabur (superseded by luxsync-v3)."
 venture = "accurova"
 description = "A dark-themed React photo gallery with an editable bento grid, drag-and-drop reordering, and one-click static export."
 successor = "luxsync-v3"
