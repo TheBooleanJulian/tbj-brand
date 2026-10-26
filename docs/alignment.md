@@ -70,6 +70,7 @@ Format: repo | category | what's different | suggested alignment | found during
 | accurova-site, deckmate, others | routing | Zeabur served the homepage (200) for unknown paths; Caddyfile 404 page never actually applied | Workers assets: explicit `not_found_handling` per site (404-page or single-page-application) | migration |
 | all repos | line endings | Drive working copies are CRLF, deployed files LF | Add `.gitattributes` (`* text=auto eol=lf`) to the standard | migration |
 | food-analyst-bot, miku-monday | duplicate | Older Zeabur copies (deployment REMOVED) and live `-2` copies share one bot token | Retire originals (suspend pending Julian) | migration |
+| juliancheung-landing | hygiene | `.claude/settings.local.json` committed and publicly served on juliancheung.com (permissions allowlist, no secrets) | Add `.claude/` and `.vscode/` to the standard .gitignore; deploy tooling must never serve dot-folders (stage_static.py now skips them) | migration |
 | are-you-donkey | content drift | Zeabur copy (45,827 B) differs from repo HEAD (46,882 B): last deploy was behind the repo | Confirm repo HEAD is intended; note drift | migration |
 
 - deckmate, miku-watch, accurova-site, miku-figures, iq-aptitude-test, see-your-voice, miku-keytar, accurova-bni, invoice-forge: live on Workers 2026-10-26; configs in zeabur-migration/sites/.
