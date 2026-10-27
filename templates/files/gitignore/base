@@ -7,3 +7,7 @@ Thumbs.db
 *.log
 .vscode/
 .idea/
+
+# Local tool state (Claude Code allowlists can hold secrets; Wrangler caches)
+.claude/
+.wrangler/
