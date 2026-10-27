@@ -20,6 +20,7 @@ How it works:
 | D4 | Where wrangler config lives during migration | Staged in zeabur-migration/sites/ so repos stay untouched; target is `wrangler.jsonc` in each repo root (infra_host checks for it) | open |
 | D5 | Deploy-on-push for Workers | Zeabur redeployed on every push; Workers sites are deployed from Julian's machine today. Options: Cloudflare Workers Builds (connect repo in dashboard, needs wrangler.jsonc in repo) or a GitHub Action running `wrangler deploy` with a CLOUDFLARE_API_TOKEN secret. Workers Builds is the closer Zeabur equivalent and needs no token in GitHub. | open |
 | D6 | Large media (miku-bday dl/, 6 GB of mp4) | Workers static assets cap files at 25 MiB. R2 bucket + custom domain is the Cloudflare option (free tier 10 GB). | open |
+| D7 | Bot runtime (see zeabur-migration/HARD-GROUP-PLAN.md H1) | Telegram serverless has no scheduler and no runtime-secret store; 8 of 11 bots need cron, 9 need API keys | open: recommend Cloudflare Workers webhook bots |
 
 ## Baseline snapshot (2026-10-26)
 | Attribute | Finding |
@@ -71,6 +72,13 @@ Format: repo | category | what's different | suggested alignment | found during
 | all repos | line endings | Drive working copies are CRLF, deployed files LF | Add `.gitattributes` (`* text=auto eol=lf`) to the standard | migration |
 | food-analyst-bot, miku-monday | duplicate | Older Zeabur copies (deployment REMOVED) and live `-2` copies share one bot token | Retire originals (suspend pending Julian) | migration |
 | juliancheung-landing | hygiene | `.claude/settings.local.json` committed and publicly served on juliancheung.com (permissions allowlist, no secrets) | Add `.claude/` and `.vscode/` to the standard .gitignore; deploy tooling must never serve dot-folders (stage_static.py now skips them) | migration |
+| accurova-workflow-dashboard | security | `VITE_API_KEY` is baked into the browser bundle at build time | Keep keys server-side (Worker); browser gets a session, not a key | triage |
+| accurova-loyalty | deploy | Zeabur service with no running deployment still claims `infinicanvas.thebooleanjulian.dev` | Release the hostname when retiring; one hostname per app | triage |
+| clawsune, supercalifragilisticex, miku-ocr | runtime | OCR via Tesseract, a native binary (can't run in Workers or Telegram serverless) | One shared approach: vision-model OCR (Gemini) in the JS bot skeleton | triage |
+| 8 bots | runtime | Scheduling reinvented per bot: job_queue, APScheduler, node-cron, setInterval | Cron Triggers in wrangler.jsonc + one `scheduled` handler pattern | triage |
+| 5 apps | data | Redis used for small state/cache in miku-monday, food-analyst-bot, miku-singlish, supercalifragilisticex, infinicanvas | D1/KV for bot state, Durable Objects for infinicanvas real-time | triage |
+| second-brain, web-search-ai-agent, accurova-loyalty, readme-forge | lifecycle | Zeabur deployments REMOVED or never configured; apps silently not running | Uptime + last-deploy check in the new monitoring-miku | triage |
+| every Zeabur service | config | `PASSWORD` variable present on all 55 services (injected by Zeabur, not read by most apps) | Ignore when migrating; only carry variables the code reads | triage |
 | are-you-donkey | content drift | Zeabur copy (45,827 B) differs from repo HEAD (46,882 B): last deploy was behind the repo | Confirm repo HEAD is intended; note drift | migration |
 
 - deckmate, miku-watch, accurova-site, miku-figures, iq-aptitude-test, see-your-voice, miku-keytar, accurova-bni, invoice-forge: live on Workers 2026-10-26; configs in zeabur-migration/sites/.
