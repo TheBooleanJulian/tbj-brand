@@ -36,6 +36,9 @@ tier = "product"
 venture = "accurova"
 description = "One points ledger, three access points: Telegram bot, web portal, QR codes."
 wave = 1
+host = "cloudflare-workers"
+data = "supabase"
+homepage = "https://loyalty.accurova.com"
 
 [repo."accurova-photovault-tracker"]
 tier = "product"
@@ -341,10 +344,13 @@ tier = "product"
 description = "A visual planning toolkit for turning Google Calendar into an intentional, legible system."
 wave = 1
 
-[repo."second-brain"]
+[repo."inner-constellation"]
 tier = "product"
 description = "A private, multi-user interview app that builds a personal \"second brain\" document across ten life domains."
 wave = 1
+host = "cloudflare-workers"
+data = "supabase"
+notes = "Renamed from second-brain on 2026-10-27."
 
 [repo."see-your-voice"]
 tier = "product"
@@ -399,7 +405,8 @@ description = "A Windows GUI tool that ingests SD card photos and video into a d
 wave = 1
 
 [repo."web-search-ai-agent"]
-tier = "tool"
+tier = "archive"
+notes = "Retired 2026-10-27; Zeabur service suspended."
 license = "mit"
 wave = 2
 
@@ -408,6 +415,14 @@ tier = "themed"
 venture = "fan"
 description = "MIKU IMAGES KAWAII UPLINK (M.I.K.U.)"
 wave = 2
+
+[repo."thebooleanjulian-llm"]
+tier = "tool"
+description = "Internal LLM gateway for the TBJ fleet: auth, guardrails, routing across FreeLLMAPI and paid keys, observability, eval gate."
+wave = 1
+host = "cloudflare-workers"
+data = "none"
+notes = "Design only as of 2026-10-27 (docs/). Visibility undecided (L1)."
 
 [repo."youtube-thumbnail-getter"]
 tier = "archive"
