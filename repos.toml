@@ -40,6 +40,15 @@ host = "cloudflare-workers"
 data = "supabase"
 homepage = "https://loyalty.accurova.com"
 
+[repo."accurova-payment"]
+tier = "product"
+venture = "accurova"
+description = "Client payment details page: payment schedule, PayNow QR and UEN, with a personal PayNow tab."
+homepage = "https://payment.accurova.com"
+wave = 1
+host = "cloudflare-workers"
+data = "none"
+
 [repo."accurova-photovault-tracker"]
 tier = "product"
 venture = "accurova"
